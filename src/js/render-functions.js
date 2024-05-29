@@ -1,5 +1,6 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
+import {initializeLightbox} from "../main.js"
 
 
 export function errorMassage() {
@@ -20,24 +21,22 @@ export function noImageMassage() {
     });
 }
 
-export function startRender(q, page, gallery) {
-    search(q, page)
-    .then(
-    ({images, pageNum}) => {
-        loader.style.display = "none";
-        if(images.hits.length != 0) {
-            renderGallery(images, gallery);
-            page = pageNum;
-        }else{
-            errorMassage();
-        }
+export function startRender(images, page, gallery) {
+    renderGallery(images, gallery);
+    console.log(page);
+    if(page > 1) {
+        console.log(page);
+        window.scrollBy({
+            top: gallery.firstElementChild.getBoundingClientRect().height * 2,
+            behavior: "smooth",
+        });
     }
-)
-.catch((error) => console.log(`error ${error}`));
+    page += 1;
+    initializeLightbox();
 }
 
 
-export function renderGallery(images, gallery, loadMore) {
+export function renderGallery(images, gallery) {
     
     const galleryArr = [];
 
@@ -87,7 +86,7 @@ export function renderGallery(images, gallery, loadMore) {
 
         galleryArr.push(li);
     })
+    console.log(images.totalHits);
 
     gallery.append(...galleryArr);
-    loadMore.style.display = "block";
 }

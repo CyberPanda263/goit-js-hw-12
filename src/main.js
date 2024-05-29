@@ -7,14 +7,14 @@ let page = 1;
 let q;
 const perPage = 15;
 
-import { errorMassage, noImageMassage, renderGallery } from "./js/render-functions";
+import { errorMassage, noImageMassage, startRender, renderGallery } from "./js/render-functions";
 import { search } from "./js/pixabay-api";
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.css';
 
 let galleryList;
 
-function initializeLightbox() {
+export function initializeLightbox() {
     if (galleryList) {
         galleryList.destroy();
     }
@@ -31,13 +31,21 @@ form.addEventListener("submit", async (event) => {
     q = form.elements.searchItem.value.trim().replace(" ", "+");
     
     try {
-        const { images, pageNum } = await search(q, page, perPage);
+        const images = await search(q, page, perPage);
         loader.style.display = "none";
         
         if (images.hits.length !== 0) {
-            renderGallery(images, gallery, loadMore);
-            page = pageNum;
+            /*
+            renderGallery(images, gallery);
+            page += 1;
             initializeLightbox();
+            */
+            startRender(images, page, gallery);
+            if(images.totalHits > perPage) {
+                loadMore.style.display = "block";
+            }else {
+                loadMore.style.display = "none";
+            }
         } else {
             errorMassage();
         }
@@ -50,18 +58,37 @@ form.addEventListener("submit", async (event) => {
 
 loadMore.addEventListener("click", async () => {
     try {
-        const { images, pageNum } = await search(q, page, perPage);
+        const images = await search(q, page, perPage);
         if ((page * perPage) < images.totalHits) {
+            /*
             renderGallery(images, gallery, loadMore);
             window.scrollBy({
                 top: gallery.firstElementChild.getBoundingClientRect().height * 2,
                 behavior: "smooth",
             });
-            page = pageNum;
+            page += 1;
             initializeLightbox();
+            */
+            startRender(images, page, gallery);
         } else {
-            noImageMassage();
-            loadMore.style.display = "none";
+            if(images.hits.length !== 0){
+                /*
+                renderGallery(images, gallery, loadMore);
+                window.scrollBy({
+                    top: gallery.firstElementChild.getBoundingClientRect().height * 2,
+                    behavior: "smooth",
+                });
+                page += 1;
+                initializeLightbox();
+                */
+                startRender(images, page, gallery);
+                if(images.totalHits <= perPage) {
+                    loadMore.style.display = "block";
+                }else {
+                    noImageMassage();
+                    loadMore.style.display = "none";
+                }
+            }
         }
     } catch (error) {
         console.error("Error fetching more images:", error);

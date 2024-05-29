@@ -11,9 +11,7 @@ export async function search(q, page, perPage) {
         safesearch: "true",
     });
 
-    page += 1;
-
   const response = await axios.get(`https://pixabay.com/api/?${options}`);
 
-  return {images: response.data, pageNum: page};
+  return response.data;
 };
