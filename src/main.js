@@ -35,12 +35,8 @@ form.addEventListener("submit", async (event) => {
         loader.style.display = "none";
         
         if (images.hits.length !== 0) {
-            /*
-            renderGallery(images, gallery);
-            page += 1;
-            initializeLightbox();
-            */
             startRender(images, page, gallery);
+            page += 1;
             if(images.totalHits > perPage) {
                 loadMore.style.display = "block";
             }else {
@@ -60,28 +56,12 @@ loadMore.addEventListener("click", async () => {
     try {
         const images = await search(q, page, perPage);
         if ((page * perPage) < images.totalHits) {
-            /*
-            renderGallery(images, gallery, loadMore);
-            window.scrollBy({
-                top: gallery.firstElementChild.getBoundingClientRect().height * 2,
-                behavior: "smooth",
-            });
-            page += 1;
-            initializeLightbox();
-            */
             startRender(images, page, gallery);
+            page += 1;
         } else {
             if(images.hits.length !== 0){
-                /*
-                renderGallery(images, gallery, loadMore);
-                window.scrollBy({
-                    top: gallery.firstElementChild.getBoundingClientRect().height * 2,
-                    behavior: "smooth",
-                });
-                page += 1;
-                initializeLightbox();
-                */
                 startRender(images, page, gallery);
+                page += 1;
                 if(images.totalHits <= perPage) {
                     loadMore.style.display = "block";
                 }else {
