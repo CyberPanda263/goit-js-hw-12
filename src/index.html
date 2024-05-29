@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla App Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body>
+    <section class="search">
+      <div class="container">
+        <form class="search-form">
+          <input class="search-form-input" type="search" name="searchItem" placeholder="Search images..."/>
+          <button class="search-form-submit" type="submit">Search</button>
+        </form>
+        <span class="loader" id="loader"></span>
+      </div>
+    </section>
+    <section class="gallery">
+      <div class="container">
+          <ul class="gallery-list"></ul>
+          <button class="show-more-btn" type="button">Load more</button>
+      </div>
+    </section>
+    <section>
+      <button class="up" type="button">up</button>
+    </section>
+  </body>
+</html>
