@@ -23,15 +23,12 @@ export function noImageMassage() {
 
 export function startRender(images, page, gallery) {
     renderGallery(images, gallery);
-    console.log(page);
     if(page > 1) {
-        console.log(page);
         window.scrollBy({
             top: gallery.firstElementChild.getBoundingClientRect().height * 2,
             behavior: "smooth",
         });
     }
-    page += 1;
     initializeLightbox();
 }
 
@@ -86,7 +83,6 @@ export function renderGallery(images, gallery) {
 
         galleryArr.push(li);
     })
-    console.log(images.totalHits);
 
     gallery.append(...galleryArr);
 }
